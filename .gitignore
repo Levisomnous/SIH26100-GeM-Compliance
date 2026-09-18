@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Databases / local runtime data
+*.db
+*.sqlite
+*.sqlite3
+*_backup.db
+
+# Generated test artifacts
+*.pdf
+
+# Node / frontend artifacts
+node_modules/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
