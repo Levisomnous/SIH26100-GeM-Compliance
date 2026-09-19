@@ -5,5 +5,19 @@
       "maxDuration": 60,
       "includeFiles": "index.html"
     }
-  }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/backend/main.py"
+    },
+    {
+      "source": "/docs",
+      "destination": "/backend/main.py"
+    },
+    {
+      "source": "/openapi.json",
+      "destination": "/backend/main.py"
+    }
+  ]
 }
