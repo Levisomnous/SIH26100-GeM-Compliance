@@ -1,0 +1,21 @@
+{
+  "name": "gem-bid-compliance-platform",
+  "version": "1.0.0",
+  "description": "GeM Bid Compliance Verification Platform - Smart India Hackathon / Tekathon 5.0",
+  "scripts": {
+    "dev": "powershell -Command \"if (Test-Path .venv/Scripts/python.exe) { .venv/Scripts/python.exe -m uvicorn backend.main:app --reload --port 8000 } else { python -m uvicorn backend.main:app --reload --port 8000 }\"",
+    "start": "powershell -Command \"if (Test-Path .venv/Scripts/python.exe) { .venv/Scripts/python.exe -m uvicorn backend.main:app --port 8000 } else { python -m uvicorn backend.main:app --port 8000 }\"",
+    "prisma:generate": "npx prisma generate",
+    "prisma:push": "npx prisma db push",
+    "prisma:studio": "npx prisma studio"
+  },
+  "keywords": [
+    "gem",
+    "compliance",
+    "verification",
+    "supabase",
+    "prisma"
+  ],
+  "author": "Index Labs",
+  "license": "ISC"
+}

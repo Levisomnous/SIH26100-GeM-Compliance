@@ -29,8 +29,15 @@ def _collect_issues(report: Dict[str, Any]) -> Dict[str, List[str]]:
         issues["inconsistencies"].append("gstn_lookup_missing")
 
     # flags reported by scoring
+    CRITICAL_FLAGS = {
+        "document_tamper_detected",
+        "gstin_checksum_invalid",
+        "recycled_document_detected",
+        "tender_ineligible",
+        "debarment_match",
+    }
     for f in flags or []:
-        if f == "document_tamper_detected":
+        if f in CRITICAL_FLAGS:
             issues["critical"].append(f)
         else:
             issues["inconsistencies"].append(f)

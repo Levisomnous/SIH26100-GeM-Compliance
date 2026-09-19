@@ -1,0 +1,81 @@
+// Prisma schema for GeM Bid Compliance Verification Platform
+// Connects to PostgreSQL / Supabase
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider             = "prisma-client-py"
+  recursive_type_depth = 5
+}
+
+model Bid {
+  id               String     @id
+  bidder_name      String?
+  tender_id        String?
+  filename         String?
+  file_sha256      String?
+  uploaded_at      Float
+  compliance_score Float
+  risk_level       String     // 'Low', 'Medium', 'High', 'Critical'
+  report_json      String     @db.Text
+  audit_logs       AuditLog[]
+
+  @@index([file_sha256], name: "idx_bids_sha256")
+  @@index([tender_id], name: "idx_bids_tender")
+  @@index([uploaded_at(sort: Desc)], name: "idx_bids_uploaded_at")
+  @@map("bids")
+}
+
+model AuditLog {
+  seq       Int    @id
+  timestamp Float
+  bid_id    String
+  actor     String
+  action    String
+  details   String? @db.Text
+  prev_hash String
+  row_hash  String @unique
+
+  bid Bid @relation(fields: [bid_id], references: [id], onDelete: Cascade)
+
+  @@index([bid_id], name: "idx_audit_bid_id")
+  @@map("audit_log")
+}
+
+model TenderCriteria {
+  tender_id              String   @id
+  title                  String
+  min_turnover           Float    @default(0)
+  min_local_content      Float    @default(0)
+  requires_startup_proof Boolean  @default(false)
+  requires_oem_letter    Boolean  @default(false)
+
+  @@map("tender_criteria")
+}
+
+model Bidder {
+  id                 String   @id @default(uuid())
+  profile_id         String?
+  entity_name        String
+  entity_type        String?
+  udyam_number       String?
+  gstin              String?  @unique
+  pan                String?
+  cin                String?
+  email              String?
+  phone              String?
+  state              String?
+  business_type      String?
+  msme_category      String?
+  registered_address String?
+  created_at         DateTime @default(now())
+  updated_at         DateTime @default(now())
+
+  @@index([gstin], name: "idx_bidders_gstin")
+  @@index([entity_name], name: "idx_bidders_entity_name")
+  @@map("bidders")
+}
+

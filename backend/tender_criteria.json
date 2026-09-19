@@ -1,0 +1,66 @@
+{
+  "GEM-UNKNOWN": {
+    "title": "Unspecified / no tender selected",
+    "min_turnover": 0,
+    "min_local_content": 0,
+    "requires_startup_proof": false,
+    "requires_epfo": false,
+    "requires_bis": false
+  },
+  "GEM-2026-IT-004521": {
+    "title": "Supply of IT Hardware and Peripherals",
+    "min_turnover": 5000000,
+    "min_local_content": 50,
+    "requires_startup_proof": false,
+    "requires_epfo": false,
+    "requires_bis": false
+  },
+  "GEM-2026-MSME-011": {
+    "title": "MSME-Reserved: Office Furniture",
+    "min_turnover": 0,
+    "min_local_content": 25,
+    "requires_startup_proof": true,
+    "requires_epfo": false,
+    "requires_bis": false
+  },
+  "GEM-2026-CONST-098": {
+    "title": "Civil Works — Minor Construction & Maintenance",
+    "min_turnover": 10000000,
+    "min_local_content": 20,
+    "requires_startup_proof": false,
+    "requires_epfo": true,
+    "requires_bis": false
+  },
+  "CPCL-2026-VALV-089": {
+    "title": "Procurement of High-Pressure Forged Steel Refinery Valves & Flanges — CPCL Manali Refinery",
+    "min_turnover": 150000000,
+    "min_local_content": 50,
+    "requires_startup_proof": false,
+    "requires_epfo": true,
+    "requires_bis": true
+  },
+  "CPCL-2026-CAT-014": {
+    "title": "Supply of Hydroprocessing Catalyst & Technical Services — CPCL Cauvery Basin Refinery",
+    "min_turnover": 400000000,
+    "min_local_content": 20,
+    "requires_startup_proof": false,
+    "requires_epfo": false,
+    "requires_bis": true
+  },
+  "CPCL-2026-TURN-003": {
+    "title": "Refinery Turnaround Piping & Structural Fabrication Services — CPCL Chennai Complex",
+    "min_turnover": 50000000,
+    "min_local_content": 50,
+    "requires_startup_proof": false,
+    "requires_epfo": true,
+    "requires_bis": false
+  },
+  "CPCL-2026-ELEC-027": {
+    "title": "Supply & Installation of HT/LT Switchgear & Transformers — CPCL Nagapattinam Refinery",
+    "min_turnover": 80000000,
+    "min_local_content": 50,
+    "requires_startup_proof": false,
+    "requires_epfo": true,
+    "requires_bis": true
+  }
+}

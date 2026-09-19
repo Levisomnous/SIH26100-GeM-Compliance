@@ -19,6 +19,7 @@ env/
 
 # Generated test artifacts
 *.pdf
+!samples/*.pdf
 
 # Node / frontend artifacts
 node_modules/

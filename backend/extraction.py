@@ -57,6 +57,7 @@ def extract_fields(text: str) -> Dict[str, Any]:
     out['cin'] = None
     out['udyam'] = None
     out['declared_revenue'] = None
+    out['declared_local_content'] = None
     out['claims_startup_status'] = False
     out['has_oem_letter_mention'] = False
 
@@ -83,6 +84,14 @@ def extract_fields(text: str) -> Dict[str, Any]:
             out['declared_revenue'] = float(m.group(1).replace(',', ''))
         except Exception:
             out['declared_revenue'] = None
+    # declared local content: look for "local content ... NN%"
+    m = re.search(r"local\s+content[^0-9%]{0,20}([0-9]{1,3}(?:\.[0-9]+)?)\s*%", text, re.IGNORECASE)
+    if m:
+        try:
+            pct = float(m.group(1))
+            out['declared_local_content'] = pct if 0 <= pct <= 100 else None
+        except Exception:
+            out['declared_local_content'] = None
     # startup claim
     if 'startup india' in text.lower() or 'startupindia' in text.lower():
         out['claims_startup_status'] = True
