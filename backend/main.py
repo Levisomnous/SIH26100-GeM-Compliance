@@ -927,10 +927,16 @@ def adapter_js():
 def root():
     # serve existing HTML but inject a small adapter script before </body>
     root_dir = Path(__file__).resolve().parents[1]
-    path = root_dir / "index.html"
-    if not path.exists():
-        path = root_dir / "index (1).html"
-    if not path.exists():
+    candidates = [
+        root_dir / "index.html",
+        Path(__file__).resolve().parent / "index.html",
+        Path("index.html").resolve(),
+        Path("/var/task/index.html"),
+        Path("/var/task/backend/index.html"),
+        root_dir / "index (1).html",
+    ]
+    path = next((c for c in candidates if c.exists()), None)
+    if not path:
         return PlainTextResponse("index.html not found", status_code=500)
     html = path.read_text(encoding='utf-8')
     inject = '<script src="/__adapter__.js"></script>'
