@@ -18,6 +18,14 @@
     {
       "source": "/openapi.json",
       "destination": "/backend/main.py"
+    },
+    {
+      "source": "/__auth__.js",
+      "destination": "/backend/main.py"
+    },
+    {
+      "source": "/__adapter__.js",
+      "destination": "/backend/main.py"
     }
   ]
 }
