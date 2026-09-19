@@ -8,6 +8,7 @@ import time
 import uuid
 from pathlib import Path
 
+from urllib.parse import parse_qs, urlencode
 from fastapi import Body, Depends, FastAPI, File, Form, HTTPException, Query, Request, Response, UploadFile
 from fastapi.responses import JSONResponse, HTMLResponse, PlainTextResponse
 
@@ -50,6 +51,34 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan)
+
+
+@app.middleware("http")
+async def vercel_path_rewrite(request: Request, call_next):
+    """Reconstructs the original intended route when deployed behind Vercel rewrites."""
+    curr_path = request.url.path
+    if curr_path in ("/backend/main.py", "/api/index.py", "/api") or curr_path.endswith("main.py") or curr_path.endswith("index.py"):
+        override_path = request.query_params.get("__path__")
+        if override_path:
+            request.scope["path"] = override_path
+            qs_bytes = request.scope.get("query_string", b"")
+            if b"__path__=" in qs_bytes:
+                parsed = parse_qs(qs_bytes.decode("latin1"), keep_blank_values=True)
+                parsed.pop("__path__", None)
+                request.scope["query_string"] = urlencode(parsed, doseq=True).encode("latin1")
+        else:
+            matched = request.headers.get("x-matched-path") or request.headers.get("x-forwarded-uri")
+            if matched and not (matched.endswith("main.py") or matched.endswith("index.py")):
+                request.scope["path"] = matched
+            elif curr_path.endswith("main.py") or curr_path.endswith("index.py"):
+                request.scope["path"] = "/docs"
+    return await call_next(request)
+
+
+@app.get("/backend/main.py", include_in_schema=False)
+def vercel_backend_entrypoint():
+    from fastapi.responses import RedirectResponse
+    return RedirectResponse(url="/docs")
 
 
 @app.middleware("http")

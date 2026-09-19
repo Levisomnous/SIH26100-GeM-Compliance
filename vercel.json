@@ -4,28 +4,40 @@
     "backend/main.py": {
       "maxDuration": 60,
       "includeFiles": "index.html"
+    },
+    "api/index.py": {
+      "maxDuration": 60,
+      "includeFiles": "index.html"
     }
   },
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/backend/main.py"
+      "destination": "/backend/main.py?__path__=/api/$1"
     },
     {
       "source": "/docs",
-      "destination": "/backend/main.py"
+      "destination": "/backend/main.py?__path__=/docs"
+    },
+    {
+      "source": "/docs/(.*)",
+      "destination": "/backend/main.py?__path__=/docs"
     },
     {
       "source": "/openapi.json",
-      "destination": "/backend/main.py"
+      "destination": "/backend/main.py?__path__=/openapi.json"
+    },
+    {
+      "source": "/redoc",
+      "destination": "/backend/main.py?__path__=/redoc"
     },
     {
       "source": "/__auth__.js",
-      "destination": "/backend/main.py"
+      "destination": "/backend/main.py?__path__=/__auth__.js"
     },
     {
       "source": "/__adapter__.js",
-      "destination": "/backend/main.py"
+      "destination": "/backend/main.py?__path__=/__adapter__.js"
     }
   ]
 }
